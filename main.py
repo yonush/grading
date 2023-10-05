@@ -22,8 +22,18 @@ GradeAce results system
 """
 
 import pathlib
-from guizero import (App, Box, Combo, ListBox, Picture, PushButton, Text,
-                     TextBox, TitleBox, Window)
+from guizero import (
+    App,
+    Box,
+    Combo,
+    ListBox,
+    Picture,
+    PushButton,
+    Text,
+    TextBox,
+    TitleBox,
+    Window,
+)
 
 from course import Courses
 from enrolment import Enrolment
@@ -40,13 +50,13 @@ school = School()
 _studentid = None  # currenly selected student
 _coursecode = None  # currently selected course
 
-app = App(title="GradeAce Results System",
-          width=800, height=600, bg="skyblue3")
+app = App(title="GradeAce Results System", width=800, height=600, bg="skyblue3")
 app.text_color = "black"
 main_box = Box(app, height="fill", width="fill", align="left", border=False)
 heading_box = Box(main_box, width="fill", align="top", border=False, layout="grid")
-Picture(heading_box, image=f"{pwd}/static/logo2.png", align="left", grid=[0,0])
-heading_text = Text(heading_box, size=25, text="Results System", grid=[1,0])
+Picture(heading_box, image=f"{pwd}/static/logo2.png", align="left", grid=[0, 0])
+heading_text = Text(heading_box, size=25, text="Results System", grid=[1, 0])
+
 
 # this is a placeholder event handler
 def evtNull(value=None):
@@ -81,8 +91,9 @@ def refreshLists():
         enrollList.append(g)
     _enrollcode = enrollList.items[0]
 
-# load the first student's details using name as the key
+    # load the first student's details using name as the key
     evtUpdateDetails(school.allstudent[0].student.name)
+
 
 ############# Student maintenance  ##############
 
@@ -142,19 +153,30 @@ def evtAddStudent():
 
 
 ## ----- Student form/window ------------ ##
-frmStudent = Window(app, title="Student Maintenance", width=400,
-                    height=400, layout="auto", bg="skyblue3")
+frmStudent = Window(
+    app,
+    title="Student Maintenance",
+    width=400,
+    height=400,
+    layout="auto",
+    bg="skyblue3",
+)
 frmStudent.hide()
 Text(frmStudent, size=24, text="Student Maintenance")
 
-studbox = Box(frmStudent, width="fill", align="top",
-              border=True, layout="auto")
+studbox = Box(frmStudent, width="fill", align="top", border=True, layout="auto")
 _students = []
-studentList = ListBox(studbox, items=_students, height='fill', width='fill',
-                      multiselect=False, command=displayStudent, scrollbar=True)
+studentList = ListBox(
+    studbox,
+    items=_students,
+    height="fill",
+    width="fill",
+    multiselect=False,
+    command=displayStudent,
+    scrollbar=True,
+)
 studentList.bg = "cornsilk2"
-studbox = Box(frmStudent, width="fill", align="top",
-              border=True, layout="grid")
+studbox = Box(frmStudent, width="fill", align="top", border=True, layout="grid")
 Text(studbox, text="ID:", grid=[0, 0])
 Text(studbox, text="Name:", grid=[0, 1])
 Text(studbox, text="Contact:", grid=[0, 2])
@@ -162,8 +184,8 @@ Text(studbox, text="Email:", grid=[0, 3])
 
 edID = TextBox(studbox, text="", width=25, align="left", grid=[1, 0])
 edName = TextBox(studbox, text="", width=25, align="left", grid=[1, 1])
-edContact = TextBox(studbox, text="", width=25, align="left",  grid=[1, 2])
-edEmail = TextBox(studbox, text="", width=50, align="left",  grid=[1, 3])
+edContact = TextBox(studbox, text="", width=25, align="left", grid=[1, 2])
+edEmail = TextBox(studbox, text="", width=50, align="left", grid=[1, 3])
 edID.bg = "cornsilk2"
 edName.bg = "cornsilk2"
 edContact.bg = "cornsilk2"
@@ -209,37 +231,55 @@ def evtDeleteEnroll():
 
 
 def evtAddEnroll():
-    global _studentid,  _coursecode
+    global _studentid, _coursecode
 
     c = school.findStudent(_studentid)
     if c != None:  # make sure it does not exist
-        school.addAssessByID(_studentid, Grades(
-            _coursecode, assessment=[0, 0, 0]))
+        school.addAssessByID(_studentid, Grades(_coursecode, assessment=[0, 0, 0]))
         refreshLists()
 
 
 ## ----- Student form/window ------------ ##
-frmEnroll = Window(app, title="Student Maintenance", width=400,
-                   height=400, layout="auto", bg="skyblue3")
+frmEnroll = Window(
+    app,
+    title="Student Maintenance",
+    width=400,
+    height=400,
+    layout="auto",
+    bg="skyblue3",
+)
 frmEnroll.hide()
 Text(frmEnroll, size=24, text="Student Maintenance")
 
 studbox = Box(frmEnroll, width="fill", align="top", border=True, layout="auto")
 _Courses = []
-course1List = ListBox(studbox, items=_Courses, height='fill', width='fill',
-                      multiselect=False, command=displayEnrollLeft, scrollbar=True)
+course1List = ListBox(
+    studbox,
+    items=_Courses,
+    height="fill",
+    width="fill",
+    multiselect=False,
+    command=displayEnrollLeft,
+    scrollbar=True,
+)
 course1List.bg = "cornsilk2"
 
 _Enroll = []
-enrollList = ListBox(studbox, items=_Enroll, height='fill', width='fill',
-                     multiselect=False, command=displayEnrollRight, scrollbar=True)
+enrollList = ListBox(
+    studbox,
+    items=_Enroll,
+    height="fill",
+    width="fill",
+    multiselect=False,
+    command=displayEnrollRight,
+    scrollbar=True,
+)
 enrollList.bg = "cornsilk2"
 
 btnbox = Box(frmEnroll, width="fill", align="top", border=True, layout="auto")
 btn = PushButton(btnbox, text="Add Course", command=evtAddEnroll, align="left")
 btn.bg = "skyblue1"
-btn = PushButton(btnbox, text="Remove Course",
-                 command=evtDeleteEnroll, align="left")
+btn = PushButton(btnbox, text="Remove Course", command=evtDeleteEnroll, align="left")
 btn.bg = "skyblue1"
 btn = PushButton(btnbox, text="Close", command=evtEnrollHide, align="left")
 btn.bg = "skyblue1"
@@ -281,15 +321,28 @@ def evtUpdateAssess():
 
 
 ## ----- Assessment form/window ------------ ##
-frmAssess = Window(app, title="Assessment Maintenance", width=400,
-                   height=400, layout="auto", bg="skyblue3")
+frmAssess = Window(
+    app,
+    title="Assessment Maintenance",
+    width=400,
+    height=400,
+    layout="auto",
+    bg="skyblue3",
+)
 frmAssess.hide()
 Text(frmAssess, size=24, text="Assessment Maintenance")
 
 studbox = Box(frmAssess, width="fill", align="top", border=True, layout="auto")
 _assessments = []
-assessList = ListBox(studbox, items=_assessments, height='fill', width='fill',
-                     multiselect=False, command=displayAssess, scrollbar=True)
+assessList = ListBox(
+    studbox,
+    items=_assessments,
+    height="fill",
+    width="fill",
+    multiselect=False,
+    command=displayAssess,
+    scrollbar=True,
+)
 assessList.bg = "cornsilk2"
 studbox = Box(frmAssess, width="fill", align="top", border=True, layout="grid")
 Text(studbox, text="code:", grid=[0, 0])
@@ -301,10 +354,10 @@ Text(studbox, text="Assess 3:", grid=[0, 5])
 
 edCrsCode = Text(studbox, text="", width=10, align="left", grid=[1, 0])
 edSemester = TextBox(studbox, text="", width=25, align="left", grid=[1, 1])
-edYear = TextBox(studbox, text="", width=25, align="left",  grid=[1, 2])
-edAssess1 = TextBox(studbox, text="", width=10, align="left",  grid=[1, 3])
-edAssess2 = TextBox(studbox, text="", width=10, align="left",  grid=[1, 4])
-edAssess3 = TextBox(studbox, text="", width=10, align="left",  grid=[1, 5])
+edYear = TextBox(studbox, text="", width=25, align="left", grid=[1, 2])
+edAssess1 = TextBox(studbox, text="", width=10, align="left", grid=[1, 3])
+edAssess2 = TextBox(studbox, text="", width=10, align="left", grid=[1, 4])
+edAssess3 = TextBox(studbox, text="", width=10, align="left", grid=[1, 5])
 
 edCrsCode.bg = "skyblue1"
 edSemester.bg = "cornsilk2"
@@ -324,6 +377,7 @@ btn.bg = "skyblue1"
 ############# Course maintenance  ##############
 
 ## -----local events for Course maintenance ------------ ##
+
 
 def evtCourseHide():
     frmCourses.hide()
@@ -358,8 +412,9 @@ def evtUpdateCourse():
     if school.courses.validCourse(_coursecode):
         m = school.courses.getCourse(_coursecode)
         school.courses.remove(_coursecode)
-        school.courses.add(edCode.value, edDesc.value,
-                           edLevel.value, edCredits.value, edWeights.value)
+        school.courses.add(
+            edCode.value, edDesc.value, edLevel.value, edCredits.value, edWeights.value
+        )
         edCode.value = ""
         edDesc.value = ""
         edLevel.value = ""
@@ -374,8 +429,7 @@ def evtAddCourse():
 
     if not school.courses.validCourse(_coursecode):
         # assume 30,30,40 default weights for now
-        school.courses.add(edCode.value, edDesc.value,
-                           edLevel.value, edCredits.value)
+        school.courses.add(edCode.value, edDesc.value, edLevel.value, edCredits.value)
         edCode.value = ""
         edDesc.value = ""
         edLevel.value = ""
@@ -385,19 +439,25 @@ def evtAddCourse():
 
 
 ## ----- Course form/window ------------ ##
-frmCourses = Window(app, title="Course Maintenance", width=450,
-                    height=400, layout="auto", bg="skyblue3")
+frmCourses = Window(
+    app, title="Course Maintenance", width=450, height=400, layout="auto", bg="skyblue3"
+)
 frmCourses.hide()
 Text(frmCourses, size=24, text="Course Manager")
 
-corbox0 = Box(frmCourses, width="fill", align="top",
-              border=True, layout="auto")
+corbox0 = Box(frmCourses, width="fill", align="top", border=True, layout="auto")
 _Courses = []
-courseList = ListBox(corbox0, items=_Courses, height='fill', width='fill',
-                     multiselect=False, command=displayCourses, scrollbar=True)
+courseList = ListBox(
+    corbox0,
+    items=_Courses,
+    height="fill",
+    width="fill",
+    multiselect=False,
+    command=displayCourses,
+    scrollbar=True,
+)
 courseList.bg = "cornsilk2"
-corbox1 = Box(frmCourses, width="fill", align="top",
-              border=True, layout="grid")
+corbox1 = Box(frmCourses, width="fill", align="top", border=True, layout="grid")
 Text(corbox1, text="Code:", grid=[0, 0])
 Text(corbox1, text="Detail:", grid=[0, 1])
 Text(corbox1, text="Level:", grid=[0, 2])
@@ -407,9 +467,9 @@ Text(corbox1, text="Weights:", grid=[0, 4])
 lvl = [5, 6, 7]
 crd = [15, 30, 45, 60]
 edCode = TextBox(corbox1, text="", width=20, align="left", grid=[1, 0])
-edDesc = TextBox(corbox1, text="", width=50, align="left",  grid=[1, 1])
-edLevel = Combo(corbox1,  options=lvl,  align="left", grid=[1, 2])
-edCredits = Combo(corbox1,  options=crd,  align="left", grid=[1, 3])
+edDesc = TextBox(corbox1, text="", width=50, align="left", grid=[1, 1])
+edLevel = Combo(corbox1, options=lvl, align="left", grid=[1, 2])
+edCredits = Combo(corbox1, options=crd, align="left", grid=[1, 3])
 edWeights = TextBox(corbox1, text="", width=25, align="left", grid=[1, 4])
 
 edCode.bg = "cornsilk2"
@@ -417,15 +477,12 @@ edDesc.bg = "cornsilk2"
 edLevel.bg = "cornsilk2"
 edCredits.bg = "cornsilk2"
 
-btnbox1 = Box(frmCourses, width="fill", align="top",
-              border=True, layout="auto")
+btnbox1 = Box(frmCourses, width="fill", align="top", border=True, layout="auto")
 btn = PushButton(btnbox1, text="New", command=evtAddCourse, align="left")
 btn.bg = "skyblue1"
-btn = PushButton(btnbox1, text="Update",
-                 command=evtUpdateCourse,  align="left")
+btn = PushButton(btnbox1, text="Update", command=evtUpdateCourse, align="left")
 btn.bg = "skyblue1"
-btn = PushButton(btnbox1, text="Delete",
-                 command=evtDeleteCourse,  align="left")
+btn = PushButton(btnbox1, text="Delete", command=evtDeleteCourse, align="left")
 btn.bg = "skyblue1"
 btn = PushButton(btnbox1, text="Cancel", command=evtCourseHide, align="left")
 btn.bg = "skyblue1"
@@ -435,8 +492,9 @@ btn.bg = "skyblue1"
 
 ## -----local events for main window ------------ ##
 
+
 def evtExit():
-    """ Confirm quit on exit or close button  """
+    """Confirm quit on exit or close button"""
     # if app.yesno("Close", "Are you sure you want to exit?"):
     exit()
 
@@ -444,7 +502,9 @@ def evtExit():
 def evtUpdateDetails(value):
     global _studentid
     s = school.findStudentByname(value)
-    edTheStudent.value = f"{s.student.studentid} {value}\n{s.student.contact}\n{s.student.email}"
+    edTheStudent.value = (
+        f"{s.student.studentid} {value}\n{s.student.contact}\n{s.student.email}"
+    )
 
     grades = school.showGradesByid(s.student.studentid)
     edGrades.value = f"- Grades -\n {grades}"
@@ -453,10 +513,12 @@ def evtUpdateDetails(value):
 
 def evtFilterRating(rating=None):
     Student_select.clear()
-    Course_names = school.findRatedCoursesNames(
-        rating) if rating else school.getCourseNames()
+    Course_names = (
+        school.findRatedCoursesNames(rating) if rating else school.getCourseNames()
+    )
     for m in Course_names:
         Student_select.append(m)
+
 
 # show the student admin dialog box
 
@@ -467,12 +529,14 @@ def evtStudents():
         studentList.append(s)
     frmStudent.show(wait=True)
 
+
 # show the assessment admin dialog box
 
 
 def evtEnrolments():
     refreshLists()
     frmEnroll.show(wait=True)
+
 
 # show the assessment admin dialog box
 
@@ -481,6 +545,7 @@ def evtAssessments():
     refreshLists()
     displayAssess(_coursecode)
     frmAssess.show(wait=True)
+
 
 # show the course admin dialog box
 
@@ -495,60 +560,69 @@ def evtCourses():
 
 def evtLoadDemoData():
     school.clear()
-    students = [Student(20220001, "Joe Bloggs", "021-123-1231", "joe.bloggs@mail.com"),
-                Student(20220002, "Sue Black", "021-123-1232", "sue.black@mail.com"),
-                Student(20220003, "Jane Doe", "021-123-1233", "jane.doe@mail.com"),
-                Student(20220004, "Kate White","021-123-1234", "kate.white@mail.com"),
-                Student(20220005, "King Kong", "021-123-4567", "king.kong@mail.com")]
+    students = [
+        Student(20220001, "Joe Bloggs", "021-123-1231", "joe.bloggs@mail.com"),
+        Student(20220002, "Sue Black", "021-123-1232", "sue.black@mail.com"),
+        Student(20220003, "Jane Doe", "021-123-1233", "jane.doe@mail.com"),
+        Student(20220004, "Kate White", "021-123-1234", "kate.white@mail.com"),
+        Student(20220005, "King Kong", "021-123-4567", "king.kong@mail.com"),
+    ]
 
-    grades = [Grades("CS5100", 1, [50, 50, 50]),
-              Grades("PF5110", 1, [60, 60, 60]),
-              Grades("CT5120", 1, [70, 70, 70]),
-              Grades("WD5130", 1, [80, 80, 80]),
-              Grades("UX5210", 1, [65, 65, 65])]
+    grades = [
+        Grades("CS5100", 1, [50, 50, 50]),
+        Grades("PF5110", 1, [60, 60, 60]),
+        Grades("CT5120", 1, [70, 70, 70]),
+        Grades("WD5130", 1, [80, 80, 80]),
+        Grades("UX5210", 1, [65, 65, 65]),
+    ]
 
-# populate the school with Enrolments
+    # populate the school with Enrolments
     for s in students:
         e = Enrolment(s, grades)
         school.add(e)
 
     school.courses.reload()
 
-# refresh all the combo lists
+    # refresh all the combo lists
     refreshLists()
+
 
 ## ----- Main window layout------------ ##
 
 
 Student_names = []
-Courses_box = Box(main_box, width="fill", border=3,  layout="grid")
+Courses_box = Box(main_box, width="fill", border=3, layout="grid")
 Text(Courses_box, size=24, text="Students", grid=[0, 0])
 Text(Courses_box, size=24, text="Student Details", align="left", grid=[1, 0])
 edTheStudent = Text(Courses_box, size=16, text="-", align="left", grid=[1, 1])
 edTheStudent.text_color = "blue4"
 edGrades = Text(Courses_box, size=16, text="", align="left", grid=[1, 2])
 
-Student_select = ListBox(Courses_box, items=Student_names, width=300, height=300,
-                         multiselect=False, command=evtUpdateDetails, scrollbar=True, grid=[0, 1, 1, 4])
+Student_select = ListBox(
+    Courses_box,
+    items=Student_names,
+    width=300,
+    height=300,
+    multiselect=False,
+    command=evtUpdateDetails,
+    scrollbar=True,
+    grid=[0, 1, 1, 4],
+)
 Student_select.bg = "cornsilk2"
-btn_Studentbox = TitleBox(main_box, text="Controls",
-                          width="fill", border=3, layout="grid")
-btn = PushButton(Courses_box, text="Enrolment",
-                 grid=[1, 3], command=evtEnrolments)
+btn_Studentbox = TitleBox(
+    main_box, text="Controls", width="fill", border=3, layout="grid"
+)
+btn = PushButton(Courses_box, text="Enrolment", grid=[1, 3], command=evtEnrolments)
 btn.bg = "skyblue1"
-btn = PushButton(Courses_box, text="Assessments",
-                 grid=[2, 3], command=evtAssessments)
+btn = PushButton(Courses_box, text="Assessments", grid=[2, 3], command=evtAssessments)
 btn.bg = "skyblue1"
 
-btn_box = TitleBox(main_box, text="Controls",
-                   width="fill", border=3, layout="grid")
-btn = PushButton(btn_box, text="Student Admin",
-                 grid=[0, 0], command=evtStudents)
+btn_box = TitleBox(main_box, text="Controls", width="fill", border=3, layout="grid")
+btn = PushButton(btn_box, text="Student Admin", grid=[0, 0], command=evtStudents)
 btn.bg = "skyblue1"
 btn = PushButton(btn_box, text="Course Admin", grid=[1, 0], command=evtCourses)
 btn.bg = "skyblue1"
-btn = PushButton(btn_box, text="Reload Demo Data",
-                 grid=[2, 0], command=evtLoadDemoData)
+btn = PushButton(btn_box, text="Reload Demo Data", grid=[2, 0], command=evtLoadDemoData)
 btn.bg = "skyblue1"
 btn = PushButton(btn_box, text="Quit", grid=[3, 0], command=evtExit)
 btn.bg = "skyblue1"

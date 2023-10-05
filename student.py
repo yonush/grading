@@ -73,10 +73,14 @@ class Student:
         return self
 
     def show(self):
-        return "\n".join([f"Student ID: {self.studentid}",
-                          f"Student: {self._name}",
-                          f"Contact: {self._contact}",
-                          f"Email: {self._email}", ])
+        return "\n".join(
+            [
+                f"Student ID: {self.studentid}",
+                f"Student: {self._name}",
+                f"Contact: {self._contact}",
+                f"Email: {self._email}",
+            ]
+        )
 
     def __str__(self):
         return self.show()
@@ -87,11 +91,15 @@ if __name__ == "__main__":
     print("Start Tests")
     c = Student(20220001, "Joe Bloggs", "021-123-1234", "joe.bloggs@mail.com")
     print(c)
-    assert str(c) == "Student ID: 20220001\nStudent: Joe Bloggs\nContact: 021-123-1234\nEmail: joe.bloggs@mail.com", \
-        "__str__ not the same"
+    assert (
+        str(c)
+        == "Student ID: 20220001\nStudent: Joe Bloggs\nContact: 021-123-1234\nEmail: joe.bloggs@mail.com"
+    ), "__str__ not the same"
 
-    assert c.show() == "Student ID: 20220001\nStudent: Joe Bloggs\nContact: 021-123-1234\nEmail: joe.bloggs@mail.com", \
-        "show not the same"
+    assert (
+        c.show()
+        == "Student ID: 20220001\nStudent: Joe Bloggs\nContact: 021-123-1234\nEmail: joe.bloggs@mail.com"
+    ), "show not the same"
 
     print(c.email)
     c.email = "joe@gmail.com"

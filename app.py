@@ -25,7 +25,7 @@ app.config["SECRET_KEY"] = "secret key"
 
 @app.route("/")
 def main():
-    """ 
+    """
     Route for home/index.html
     :param:
     :return:
@@ -35,7 +35,7 @@ def main():
 
 @app.route("/grade/<int:grade_id>/edit", methods=["POST", "GET"])
 def edit_grade(grade_id):
-    """ 
+    """
     Route for editing a single grade /grade/#/edit
     :param:
     :return:
@@ -43,23 +43,31 @@ def edit_grade(grade_id):
 
     conn = sqlite3.connect("school.db")
     cur = conn.cursor()
-    
+
     """
     To prevent "sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 1, and there are 2 supplied"
         # https://stackoverflow.com/questions/16856647/sqlite3-programmingerror-incorrect-number-of-bindings-supplied-the-current-sta
         bindgings should be a tuple
         (str(grade_id)) versus (str(grade_id),) - note the extra comma at the end
-    """    
+    """
     grade = cur.execute(
-        "SELECT id, studentID, courseID, assess1, assess2, assess3, semester FROM grades WHERE id=?",(str(grade_id),)).fetchone()
+        "SELECT id, studentID, courseID, assess1, assess2, assess3, semester FROM grades WHERE id=?",
+        (str(grade_id),),
+    ).fetchone()
     student_id = grade[1]
     if request.method.upper() == "POST":
         assess1 = request.form.get("assess1")
         assess2 = request.form.get("assess2")
         assess3 = request.form.get("assess3")
 
-        if assess1 == None or assess2 == None or assess3 == None or \
-           assess1.strip() == "" or assess2.strip() == "" or assess3.strip() == "":
+        if (
+            assess1 == None
+            or assess2 == None
+            or assess3 == None
+            or assess1.strip() == ""
+            or assess2.strip() == ""
+            or assess3.strip() == ""
+        ):
             flash("Please fill in all of the fields")
             return render_template("edit.html", grade=grade)
 
@@ -76,7 +84,7 @@ def edit_grade(grade_id):
 
 @app.route("/grade/<int:grade_id>/delete")
 def delete_grade(grade_id):
-    """ 
+    """
     Route for removing a single grade /grade/#/delete
     :param:
     :return:
@@ -91,6 +99,7 @@ def delete_grade(grade_id):
 
     return redirect(url_for("display_grades", student_id=student_id))
 
+
 # students: id, name, contact, email
 # grades: id, studentID, courseID, assess1, assess2, assess3, semester
 # courses: id, name, level, credits, weight1, weight2, weight3
@@ -98,7 +107,7 @@ def delete_grade(grade_id):
 
 @app.route("/grades/<int:student_id>/")
 def display_grades(student_id):
-    """ 
+    """
     Route for showing the grades of a single student /grades/#
     :param:
     :return:
@@ -111,7 +120,7 @@ def display_grades(student_id):
         WHERE grades.studentID = students.id 
         AND students.id=?
     """
-    #grades = cur.execute(SQL, (str(student_id))).fetchone()
+    # grades = cur.execute(SQL, (str(student_id))).fetchone()
     # Without the comma, (student_id) is just a grouped expression, not a tuple,
     # and thus the img string is treated as the input sequence.
     cur.execute(SQL, (str(student_id),))
@@ -122,7 +131,7 @@ def display_grades(student_id):
 
 @app.route("/students")
 def display_students():
-    """ 
+    """
     Route for listing all of the students /students
     :param:
     :return:
@@ -145,7 +154,7 @@ def display_students():
 # driver code for the flask application
 if __name__ == "__main__":
     conn = None
-    db = os.getcwd()+"\\school.db"
+    db = os.getcwd() + "\\school.db"
     if "school.db" not in os.listdir():
         conn = schooldb.dbconnect(db)
         if conn:

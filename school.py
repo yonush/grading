@@ -15,8 +15,9 @@ def group_by(seqs, idx=0, merge=True):
     d = dict()
     for seq in seqs:
         k = seq[idx]
-        v = d.get(k, tuple()) + (seq[:idx]+seq[idx+1:]
-                                 if merge else (seq[:idx]+seq[idx+1:],))
+        v = d.get(k, tuple()) + (
+            seq[:idx] + seq[idx + 1 :] if merge else (seq[:idx] + seq[idx + 1 :],)
+        )
         d.update({k: v})
     return d
 
@@ -24,10 +25,10 @@ def group_by(seqs, idx=0, merge=True):
 class School:
     # Public Methods
     def __init__(self):
-        self._cohort = {}        
+        self._cohort = {}
         self._courses = Courses()
 
-# class instance properties
+    # class instance properties
     @property
     def courses(self):
         return self._courses
@@ -44,7 +45,7 @@ class School:
     def studentids(self):
         return sorted(list(self._cohort.keys()))
 
-# public methods
+    # public methods
     def clear(self):
         self._cohort.clear()
         return self
@@ -69,7 +70,7 @@ class School:
         return list(l)
 
     def findStudent(self, ID) -> Student:
-        if not ID :
+        if not ID:
             raise ValueError
         if ID in list(self._cohort):
             return self._cohort[ID]
@@ -83,56 +84,64 @@ class School:
                 return s
         return None
 
-    def findAssessByCode(self,ID,code):
-        if not code or not ID: 
+    def findAssessByCode(self, ID, code):
+        if not code or not ID:
             raise ValueError
         if ID in list(self._cohort):
             return self._cohort[ID].findAssessByCode(code)
         return None
 
-    def updAssessByID(self,ID,assess):
-        if not assess or not ID: 
+    def updAssessByID(self, ID, assess):
+        if not assess or not ID:
             raise ValueError
         if ID in list(self._cohort):
-           g = self._cohort[ID].grades
-           for i in range(len(g)):
-             if g[i].code == assess.code:
-                self._cohort[ID].grades[i] = assess
+            g = self._cohort[ID].grades
+            for i in range(len(g)):
+                if g[i].code == assess.code:
+                    self._cohort[ID].grades[i] = assess
 
-    def addAssessByID(self,ID,assess):
-        if not assess or not ID: 
+    def addAssessByID(self, ID, assess):
+        if not assess or not ID:
             raise ValueError
         if ID in list(self._cohort):
-           g = self._cohort[ID]
-           if not assess.code in g.getCourses():
-             self._cohort[ID].addCourse(assess)
+            g = self._cohort[ID]
+            if not assess.code in g.getCourses():
+                self._cohort[ID].addCourse(assess)
 
     def getCoursesByid(self, ID):
         if not ID:
             raise ValueError
         if ID in list(self._cohort):
-           g = self._cohort[ID]
-           return g.getCourses()
+            g = self._cohort[ID]
+            return g.getCourses()
         return None
 
     def showGradesByid(self, ID):
         if not ID:
             raise ValueError
         if ID in list(self._cohort):
-           s = self._cohort[ID]
-           return str(s.showGrades())
+            s = self._cohort[ID]
+            return str(s.showGrades())
         return None
 
-# course related
-    def studentsByCourse(self,code):
-        return [(c.student.studentid) for c in list(self._cohort.values()) if code in c.getCourses()]
+    # course related
+    def studentsByCourse(self, code):
+        return [
+            (c.student.studentid)
+            for c in list(self._cohort.values())
+            if code in c.getCourses()
+        ]
 
     def show(self):
         s = ""
         for c in list(self._cohort.values()):
-            s += "\n".join([f"Student ID: {c.student.studentid}",
-                            f"Student name: {c.student.name}",
-                            f"Courses: {c.getCourses()}\n", ])
+            s += "\n".join(
+                [
+                    f"Student ID: {c.student.studentid}",
+                    f"Student name: {c.student.name}",
+                    f"Courses: {c.getCourses()}\n",
+                ]
+            )
         return s
 
     def __str__(self):
@@ -150,49 +159,63 @@ if __name__ == "__main__":
     print("Start Tests")
 
     school = School()
-    students = [Student(20220001,"Joe Bloggs", "021-123-1234", "joe.bloggs@mail.com"),
-               Student(20220002,"Sue Black", "021-123-1234", "sue.black@mail.com"),
-               Student(20220003,"Jane Doe", "021-123-1234", "jane.doe@mail.com"),
-               Student(20220004,"Kate White", "021-123-1234", "kate.white@mail.com")]
+    students = [
+        Student(20220001, "Joe Bloggs", "021-123-1234", "joe.bloggs@mail.com"),
+        Student(20220002, "Sue Black", "021-123-1234", "sue.black@mail.com"),
+        Student(20220003, "Jane Doe", "021-123-1234", "jane.doe@mail.com"),
+        Student(20220004, "Kate White", "021-123-1234", "kate.white@mail.com"),
+    ]
 
-    grades = [Grades("CS5100", 1, [50,50,50]),
-             Grades("PF5110", 1, [60,60,60]),
-             Grades("CT5120", 1, [70,70,70]),
-             Grades("WD5130", 1, [80,80,80]),
-             Grades("UX5210", 1, [65,65,65])]
+    grades = [
+        Grades("CS5100", 1, [50, 50, 50]),
+        Grades("PF5110", 1, [60, 60, 60]),
+        Grades("CT5120", 1, [70, 70, 70]),
+        Grades("WD5130", 1, [80, 80, 80]),
+        Grades("UX5210", 1, [65, 65, 65]),
+    ]
 
-# populate the school with Enrolments
+    # populate the school with Enrolments
     for s in students:
-        e = Enrolment(s,grades)
+        e = Enrolment(s, grades)
         school.add(e)
 
     s = school.findStudent(20220002)
     assert int(s.student.studentid) == 20220002, "Public methods - findStudentByID"
 
     s = school.findStudentByname("Jane Doe")
-    assert int(s.student.studentid) == 20220003, "Public methods - findStudentByname"    
-    
-    b = school.studentsByCourse("CS5100")    
-    assert b == [20220001, 20220002, 20220003, 20220004], "Public methods - studentsByCourse"    
-   
-    g = school.getCoursesByid(20220001)    
-    assert g == ['CS5100', 'PF5110', 'CT5120', 'WD5130', 'UX5210'], "Public methods - getCoursesByid"   
-    
-    a = school.findAssessByCode(20220001,'CS5100')    
-    assert a.assessments == [50, 50, 50], "Public methods - findAssessByCode"   
+    assert int(s.student.studentid) == 20220003, "Public methods - findStudentByname"
 
-    s = Student(20220001,"Joe Bloggs", "021-123-1234", "joe.bloggs@mail.com")
+    b = school.studentsByCourse("CS5100")
+    assert b == [
+        20220001,
+        20220002,
+        20220003,
+        20220004,
+    ], "Public methods - studentsByCourse"
+
+    g = school.getCoursesByid(20220001)
+    assert g == [
+        "CS5100",
+        "PF5110",
+        "CT5120",
+        "WD5130",
+        "UX5210",
+    ], "Public methods - getCoursesByid"
+
+    a = school.findAssessByCode(20220001, "CS5100")
+    assert a.assessments == [50, 50, 50], "Public methods - findAssessByCode"
+
+    s = Student(20220001, "Joe Bloggs", "021-123-1234", "joe.bloggs@mail.com")
     school.cohort[20220001].student = s
 
     school.remove(20220004)
-    b = school.studentsByCourse("CS5100")    
-    assert b == [20220001, 20220002, 20220003], "Public methods - studentsByCourse"    
+    b = school.studentsByCourse("CS5100")
+    assert b == [20220001, 20220002, 20220003], "Public methods - studentsByCourse"
 
-
-    #print(school.cohort[20220001])
-    #print(school.allStudentNames())
-    #print(school.showGradesByid(20220001))
-    #print(school.findAssessByCode(20220001,'CS5100'))
-    #print(school)
+    # print(school.cohort[20220001])
+    # print(school.allStudentNames())
+    # print(school.showGradesByid(20220001))
+    # print(school.findAssessByCode(20220001,'CS5100'))
+    # print(school)
     print("End Tests")
- # End of class, tests below
+# End of class, tests below

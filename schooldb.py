@@ -21,7 +21,7 @@ conn = None  # databse conenction handle
 
 
 def dbconnect(db):
-    """ 
+    """
     Connect to the database
     :param db: databse folder location + datasbe name
     :return conn: database connection handle
@@ -37,13 +37,14 @@ def dbconnect(db):
 
 
 def prepareDB(conn):
-    """ 
+    """
     Create the database for the website
     :param conn: database connection handle
     :return:
     """
 
-    SQL = ["""
+    SQL = [
+        """
         CREATE TABLE IF NOT EXISTS students (
             id integer PRIMARY KEY,
             name text NOT NULL,
@@ -51,7 +52,7 @@ def prepareDB(conn):
             email text NOT NULL
         );
     """,
-           """       
+        """       
         CREATE TABLE IF NOT EXISTS courses (
             id text PRIMARY KEY,
             name text NOT NULL,
@@ -62,7 +63,7 @@ def prepareDB(conn):
             weight3 integer NOT NULL           
         );           
     """,
-           """
+        """
         CREATE TABLE IF NOT EXISTS grades (
             id integer PRIMARY KEY,
             studentID integer NOT NULL,
@@ -74,7 +75,8 @@ def prepareDB(conn):
             year integer NOT NULL                
         );           
 
-    """]
+    """,
+    ]
     try:
         for s in SQL:
             db = conn.cursor()
@@ -85,7 +87,7 @@ def prepareDB(conn):
 
 
 def importData(conn):
-    """ import the sample data into the database
+    """import the sample data into the database
     :param conn: database connection handle
     :return:
     """
@@ -126,7 +128,7 @@ def importData(conn):
         ["PR7500", "Business Application Programming", 7, 15, 30, 30, 40],
         ["SY7660", "Information Security", 7, 15, 30, 30, 40],
         ["GA7100", "GIS Analytics", 7, 15, 30, 30, 40],
-        ["CP7001", "Capstone", 7, 60, 30, 30, 40]
+        ["CP7001", "Capstone", 7, 60, 30, 30, 40],
     ]
 
     SDATA = [
@@ -143,25 +145,21 @@ def importData(conn):
         [20220001, "CT5120", 1, 70, 70, 70, 2023],
         [20220001, "WD5130", 1, 80, 80, 80, 2023],
         [20220001, "UX5210", 1, 65, 65, 65, 2023],
-
         [20220002, "CS5100", 1, 50, 50, 50, 2023],
         [20220002, "PF5110", 1, 60, 60, 60, 2023],
         [20220002, "CT5120", 1, 70, 70, 70, 2023],
         [20220002, "WD5130", 1, 80, 80, 80, 2023],
         [20220002, "UX5210", 1, 65, 65, 65, 2023],
-
         [20220003, "CS5100", 1, 50, 50, 50, 2023],
         [20220003, "PF5110", 1, 60, 60, 60, 2023],
         [20220003, "CT5120", 1, 70, 70, 70, 2023],
         [20220003, "WD5130", 1, 80, 80, 80, 2023],
         [20220003, "UX5210", 1, 65, 65, 65, 2023],
-
         [20220004, "CS5100", 1, 50, 50, 50, 2023],
         [20220004, "PF5110", 1, 60, 60, 60, 2023],
         [20220004, "CT5120", 1, 70, 70, 70, 2023],
         [20220004, "WD5130", 1, 80, 80, 80, 2023],
         [20220004, "UX5210", 1, 65, 65, 65, 2023],
-
         [20220005, "CS5100", 1, 50, 50, 50, 2023],
         [20220005, "PF5110", 1, 60, 60, 60, 2023],
         [20220005, "CT5120", 1, 70, 70, 70, 2023],
@@ -173,15 +171,19 @@ def importData(conn):
     # import the courses
     for d in CDATA:
         print(d)
-        cur.execute("INSERT INTO courses (id,name,level,credits,weight1,weight2,weight3) VALUES(?,?,?,?,?,?,?)",
-                    (d[0], d[1], d[2], d[3], d[4], d[5], d[6]))
+        cur.execute(
+            "INSERT INTO courses (id,name,level,credits,weight1,weight2,weight3) VALUES(?,?,?,?,?,?,?)",
+            (d[0], d[1], d[2], d[3], d[4], d[5], d[6]),
+        )
     conn.commit()
 
     # import the students
     for d in SDATA:
         print(d)
         cur.execute(
-            "INSERT INTO students (id,name,contact,email) VALUES(?,?,?,?)", (d[0], d[1], d[2], d[3]))
+            "INSERT INTO students (id,name,contact,email) VALUES(?,?,?,?)",
+            (d[0], d[1], d[2], d[3]),
+        )
     conn.commit()
 
     # import the grades
@@ -189,15 +191,17 @@ def importData(conn):
     for d in GDATA:
         print(d)
         i += 1
-        cur.execute("INSERT INTO grades (id,studentID,courseID,semester,assess1,assess2,assess3,year) VALUES(?,?,?,?,?,?,?,?)",
-                    (i, d[0], d[1], d[2], d[3], d[4], d[5], d[6]))
+        cur.execute(
+            "INSERT INTO grades (id,studentID,courseID,semester,assess1,assess2,assess3,year) VALUES(?,?,?,?,?,?,?,?)",
+            (i, d[0], d[1], d[2], d[3], d[4], d[5], d[6]),
+        )
     conn.commit()
 
     cur.close()
 
 
 if __name__ == "__main__":
-    db = os.getcwd()+"\\school.db"
+    db = os.getcwd() + "\\school.db"
     print(f"Import data into {db}")
     if "school.db" in os.listdir():
         print("- Removing existing database")

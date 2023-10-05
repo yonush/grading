@@ -1,4 +1,4 @@
-'''
+"""
  Bubble sort in Python
 
  Python command line debugger, pdb, help
@@ -12,8 +12,9 @@
  q: quite the debugger
  Tutorial: https://realpython.com/python-debugging-pdb/
 
-'''
+"""
 import random
+
 
 def average(arr):
     sum = 0
@@ -21,13 +22,14 @@ def average(arr):
     for value in arr:
         sum += value
 
-    tally = 0 #uncomment this to generate an exception
+    tally = 0  # uncomment this to generate an exception
     try:
-        avg =  sum // tally   
+        avg = sum // tally
     except:
         print("div error")
 
     return avg
+
 
 def bubbleSort(arr):
     n = len(arr)
@@ -35,27 +37,28 @@ def bubbleSort(arr):
     # to go through the entire process
     wasSwapped = False
 
-    for i in range(n-1):
+    for i in range(n - 1):
         # range(n) also work but outer loop will
         # repeat one time more than needed.
         # Last i elements are already in place
-        for j in range(0, n-i-1):
- 
+        for j in range(0, n - i - 1):
+
             # traverse the array from 0 to n-i-1
             # Swap if the element first is larger than the next
             if arr[j] > arr[j + 1]:
                 wasSwapped = True
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
-         
+
         if not wasSwapped:
             # if no elementes were swappped then exit
             return
- 
+
+
 if __name__ == "__main__":
     # break on the next line and jump into the pdb debugger (not VScode)
     # uncommenting this line will activate the pdb and not the VScode visual debugger.
     # https://docs.python.org/3/library/pdb.html
-    #breakpoint() 
+    # breakpoint()
 
     # generate some range data
     data = [random.randrange(100) for i in range(10)]
