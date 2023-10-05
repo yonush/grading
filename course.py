@@ -219,7 +219,7 @@ class Courses:
 if __name__ == "__main__":
     print("Start Tests")
     C = Courses()
-    print(C)  # __str__
+    print(C)  # show __str__ but not test
 
     assert C.getCourse("SY7660") == [
         "Information Security",
