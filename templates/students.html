@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Students {% endblock %}
+
+{% block body %}
+
+<div class="main-container">
+    <a type="button" class="btn btn-info" href="/">Home</a>
+    <hr>
+<!-- id, name, email -->
+{% for student in students %}
+    <a style="text-decoration: none; color: black;" href="{{ url_for('display_grades', student_id=student[0]) }}">
+        <h2>{{ student[0] }}</h2>
+    </a>
+    <div>Name: {{ student[1] }}</div>
+    <div>Email: {{ student[2] }}</div>        
+    <a type="button" class="btn btn-info btn-sm" 
+        href="{{ url_for('display_grades', student_id=student[0]) }}">View</a>
+    <hr>
+{% endfor %}
+
+</div>
+
+{% endblock %}

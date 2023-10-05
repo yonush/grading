@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Assessment Grades {% endblock %}
+
+{% block body %}
+
+<div class="main-container">
+    <h2>Results for {{ student_id }}</h2>
+    <!-- studentID, courseID, assess1, assess2, assess3, semester, grade.id -->
+    {% for grade in grades %}
+
+    <div>Course: {{ grade[1] }}: [ {{ grade[2] }}, {{ grade[3] }}, {{ grade[4] }} ]    
+    <a type="button" class="btn btn-info btn-sm" href="{{ url_for('edit_grade', grade_id=grade[6]) }}">Edit</a>
+    <a type="button" class="btn btn-info btn-sm" href="{{ url_for('delete_grade', grade_id=grade[6], student_id=student_id) }}">Delete</a>    
+    </div>    
+    <hr>
+    {% endfor %}
+
+
+    
+    <a type="button" class="btn btn-info" href="/students">Cancel</a>
+</div>
+
+{% endblock %}
+
+

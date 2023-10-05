@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Create a Booking {% endblock %}
+
+{% block body %}
+<!-- id,session,customerID,movieID -->
+<!-- movies.id, movies.name -->
+<!-- customers.id, customers.name-->
+
+<div class="main-container">
+    <h3 class="card-title">Create a Booking</h3>
+        <form method="POST" class="form-inline">
+        Session:<br> <input class="form-control" type="text" name="session">
+        <hr>
+        <label for="customers">Customer:</label>
+        <select name="customer" id="customer">
+        {% for customer in customers %}
+                <option value={{customer[0]}}>{{customer[1]}}</option>            
+        {% endfor %}
+        </select>
+        
+        <hr>
+        <label for="movies">Movie:</label>
+        <select name="movie" id="movie">      
+        {% for movie in movies %}
+                <option value={{movie[0]}}>{{movie[1]}}</option>            
+        {% endfor %}
+        </select>
+       <hr>
+       <button type="submit" class="btn btn-info" >Book</button>
+
+       <a type="button" class="btn btn-info" href="/bookings">Cancel</a>
+    </form>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Assessments {% endblock %}
+
+{% block body %}
+<!-- id, studentID, courseID, assess1, assess2, assess3, semester -->
+
+<div class="main-container">
+    <h3 class="card-title">Edit Assessments</h3>
+    <h2 >Course {{ grade[2] }}</h2>  
+        <form method="POST" class="form-inline">
+            <label for="assess1">Assessment 1:</label> <input class="form-control" value={{ grade[3] }} type="text" name="assess1"><br /> 
+            <label for="assess2">Assessment 2:</label> <input class="form-control" value={{ grade[4] }} type="text" name="assess2"><br /> 
+            <label for="assess3">Assessment 3:</label> <input class="form-control" value={{ grade[5] }} type="text" name="assess3"><br /> 
+            <hr>
+            <button type="submit" class="btn btn-info" >Update</button>
+       <a type="button" class="btn btn-info" href="{{ url_for('display_grades', student_id=grade[1]) }}">Cancel</a>
+    </form>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,16 @@
+body
+{
+    background-color: #267ec7;
+}
+
+.main-container
+{
+    background-color: #99d5eb;
+    color: black;
+    border-radius: 10px;
+    width: 70%;
+    margin: auto;
+    margin-top: 10%;
+    padding: 5px;
+    padding-left: 10px;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GradeAce App: Assessment sub-system </title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet", href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="main-container">
+<div class="container">
+    <div class="jumbotron">
+        <h2><a href="/">
+            <img src="{{ url_for('static', filename='logo.png') }}">
+        </a>                  
+        Assessment sub-system</h2>
+        <hr width="90%">
+        <p>This is a partial application created to present the assessment subsystem for review. This sub-system was created by a different "developer" team as such differences between the main application and this sub-system will be evident.</p>
+        <h3>Features:</h3>
+        The GradeAce assessment sub-system is able to
+        <ul>
+            <li>Provide a listing of students</li>
+            <li>Let the user view a students grades</li>
+            <li>Modify assessment grades</li>
+            <li>The grading data is saved to a database</li>
+        </ul>
+        The application is NOT a standalone application and requires integration and dependencies. 
+
+        <h3>Limitations & considerations:</h3>
+        Being a partial application, there are some missing features and design decisions applied;
+        <ul>
+            <li>Minimal styling and theme applied - left up to the design team to deal with integration</li>
+            <li>Unit tests have not been included, except for the database  driver (schooldb.py)</li>
+            <li>No HTTPS (Hypertext Transfer Protocol Secure) support, no certificates</li>
+            <li>No additional web oriented security & protection (CSRF or XSS)</li>
+            <li>A non multiuser relational database was used for the datastore.</li>
+            <li>Only the bootstrap library for CSS (styling and colours) was used.</li>
+            <li>No session or cookies - the sub-system has no authentication features</li>
+            <li>Rudimentary sanitization and validation conducted on HTTP request & form variables</li>
+ 
+        </ul>
+
+        <h2>
+            <a href="/students">Current grading system</a>
+        </h2>
+    </div>
+</div>    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+</body>
+
+</html>
